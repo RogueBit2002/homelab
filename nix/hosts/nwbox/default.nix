@@ -22,8 +22,14 @@
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
 
-	programs.ssh.startAgent = true;
+	#programs.ssh.startAgent = true;
 
+	programs.ssh.knownHosts = {
+		github = {
+			hostNames = [ "github.com" ];
+			publicKeyFile = /root/.ssh/id_25519-homelab-repo.pub;
+		};
+	};
 	networking = {
 		networkmanager.enable = true;
 

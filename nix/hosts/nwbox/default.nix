@@ -33,7 +33,7 @@
 	networking = {
 		networkmanager.enable = true;
 
-		interfaces."enp1s0f0" = { useDHCP = false; ipv4.address = [ { address = "172.16.0.2"; prefixLength = 24; } ]; };
+		interfaces."enp1s0f0" = { useDHCP = false; ipv4.addresses = [ { address = "172.16.0.2"; prefixLength = 24; } ]; };
 		
 		defaultGateway.address = "172.16.0.2";
 		nameservers = [ "1.1.1.1" "1.0.0.1" ];

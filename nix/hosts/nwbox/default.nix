@@ -24,12 +24,12 @@
 
 	#programs.ssh.startAgent = true;
 
-	programs.ssh.knownHosts = {
+	/*programs.ssh.knownHosts = {
 		github = {
 			hostNames = [ "github.com" ];
 			publicKeyFile = /root/.ssh/id_25519-homelab-repo.pub;
 		};
-	};
+	};*/
 	networking = {
 		networkmanager.enable = true;
 

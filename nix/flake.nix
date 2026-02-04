@@ -2,7 +2,7 @@
 	description = "System flake for my homelab's NixOS hosts";
 
 	inputs = {
-		nixpkgs.url = "github:NixOS/nixpkgs?tag=25.11";
+		nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 	};
 
 	outputs = { self, nixpkgs, ... }@inputs: let

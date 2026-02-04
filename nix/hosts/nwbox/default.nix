@@ -33,10 +33,15 @@
 	networking = {
 		networkmanager.enable = true;
 
-		interfaces."enp1s0f0" = { useDHCP = false; ipv4.addresses = [ { address = "172.16.0.2"; prefixLength = 24; } ]; };
+		interfaces.enp2s0.useDHCP = true;
+		interfaces.enp1s0f0.useDHCP = true;
+		#interfaces."enp1s0f0" = { useDHCP = false; ipv4.addresses = [ { address = "172.16.16.2"; prefixLength = 24; } ]; };
 		
-		defaultGateway.address = "172.16.0.2";
+		#defaultGateway.address = "172.16.16.2";
 		nameservers = [ "1.1.1.1" "1.0.0.1" ];
-
 	};
+
+
+  	
+	#networking.interfaces.enp2s0.useDHCP = true;
 }

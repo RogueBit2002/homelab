@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
 	services.comin = {
               				enable = true;
 							remotes = [{

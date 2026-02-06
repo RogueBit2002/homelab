@@ -17,9 +17,7 @@
 					inputs.nixpkgs.nixosModules.readOnlyPkgs
 					inputs.comin.nixosModules.comin
 					
-					({ config, ... }: let
-						pkgs = withSystem config.nixpkgs.hostPlatform.system ({ pkgs, ... }: pkgs);
-					in {
+					({ pkgs, ... }: {
 						nixpkgs.pkgs = pkgs;
 						nix.settings.experimentalFeatures = [ "nix-command" "flakes" ];
 
@@ -41,6 +39,8 @@
 					})
 
 					./hosts/${fqdnPrefix}
+
+					({ config, ... }: { nixpkgs.pkgs = withSystem config.nixpkgs.hostPlatform.system ({ pkgs, ... }: pkgs); })
 				];
 			};
 		in {

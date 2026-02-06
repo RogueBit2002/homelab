@@ -3,7 +3,7 @@
 		
 		nixosConfigurations = let 
 
-			mkSystem = fqdnPrefix: let
+			mkSystem = fqdnPrefix: system: let
 				fqdnPrefixParts = builtins.match "([^.]*)\\.(.*)" fqdnPrefix;
 
 				hostName = if fqdnPrefixParts != null then builtins.elemAt fqdnPrefixParts 0 else fqdnPrefix;
@@ -11,14 +11,16 @@
 
 			in inputs.nixpkgs.lib.nixosSystem {
 
+				pkgs = withSystem system ({ pkgs, ... }: pkgs);
+				inherit system;
+
 				specialArgs = { flake = self; };
 
 				modules = [
 					inputs.comin.nixosModules.comin
-					inputs.nixpkgs.nixosModules.readOnlyPkgs		
-					({ config, ... }: { nixpkgs.pkgs = withSystem config.nixpkgs.hostPlatform.system ({ pkgs, ... }: pkgs); })
-
-					({ pkgs, ... }: {
+							
+				
+					({ /*pkgs,*/ ... }: {
 						nix.settings.experimentalFeatures = [ "nix-command" "flakes" ];
 
 						networking.hostName = hostName;
@@ -29,11 +31,14 @@
 					})
 
 					./hosts/${fqdnPrefix}
-					./modules/comin.nix
+					#./modules/comin.nix
+
+# inputs.nixpkgs.nixosModules.readOnlyPkgs	({ config, ... }: { nixpkgs.pkgs = withSystem config.nixpkgs.hostPlatform.system ({ pkgs, ... }: pkgs); })
+
 				];
 			};
 		in {
-			"nwbox" = mkSystem "nwbox";
+			"nwbox" = mkSystem "nwbox" "x86_64-linux";
 		};
 	};
 

@@ -11,7 +11,7 @@
 
 			in inputs.nixpkgs.lib.nixosSystem {
 				modules = [
-					inputs.nixpgs.nixosModules.readOnlyPkgs
+					inputs.nixpkgs.nixosModules.readOnlyPkgs
 					inputs.comin.nixosModules.comin
 					
 					({ config, ... }: let

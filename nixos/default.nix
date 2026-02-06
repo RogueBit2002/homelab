@@ -14,7 +14,6 @@
 				specialArgs = { flake = self; };
 
 				modules = [
-					inputs.nixpkgs.nixosModules.readOnlyPkgs
 					inputs.comin.nixosModules.comin
 					
 					({ pkgs, ... }: {
@@ -39,7 +38,7 @@
 					})
 
 					./hosts/${fqdnPrefix}
-
+					inputs.nixpkgs.nixosModules.readOnlyPkgs		
 					({ config, ... }: { nixpkgs.pkgs = withSystem config.nixpkgs.hostPlatform.system ({ pkgs, ... }: pkgs); })
 				];
 			};

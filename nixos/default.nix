@@ -10,6 +10,9 @@
 				domain = (if fqdnPrefixParts != null then "${builtins.elemAt fqdnPrefixParts 1}." else "") + self.homelab-config.networking.domain;
 
 			in inputs.nixpkgs.lib.nixosSystem {
+
+				specialArgs = { flake = self; };
+
 				modules = [
 					inputs.nixpkgs.nixosModules.readOnlyPkgs
 					inputs.comin.nixosModules.comin

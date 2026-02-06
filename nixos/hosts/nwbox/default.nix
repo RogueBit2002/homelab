@@ -4,10 +4,9 @@
 	imports = [
 		./hardware-configuration.nix
 
-		(flake + /modules/users.nix)
-		(flake + /modules/i18n.nix)
-		(flake + /modules/common-packages.nix)
-		
+		../../modules/users.nix
+		../../modules/i18n.nix
+		../../modules/common-packages.nix		
 	];
 	
 	services.openssh = {

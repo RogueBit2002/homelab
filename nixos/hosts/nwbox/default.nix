@@ -39,8 +39,8 @@
 		#defaultGateway.address = "172.16.16.2";
 		nameservers = [ "1.1.1.1" "1.0.0.1" ];
 
-		allowedUDPPorts = [ 22 ];
-		allowedTCPPorts = [ 22 ];
+		firewall.allowedUDPPorts = [ 22 ];
+		firewall.allowedTCPPorts = [ 22 ];
 	};
 
 

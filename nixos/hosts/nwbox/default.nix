@@ -12,7 +12,7 @@
 	services.openssh = {
 		enable = true;
 
-		listenAddresses = [ { addr = "172.16.0.2"; } ];
+		#listenAddresses = [ { addr = "172.16.0.2"; } ];
 		settings = {
 			PermitRootLogin = "no";
 		};
@@ -38,6 +38,9 @@
 		
 		#defaultGateway.address = "172.16.16.2";
 		nameservers = [ "1.1.1.1" "1.0.0.1" ];
+
+		allowedUDPPorts = [ 22 ];
+		allowedTCPPorts = [ 22 ];
 	};
 
 

@@ -15,9 +15,10 @@
 
 				modules = [
 					inputs.comin.nixosModules.comin
-					
+					inputs.nixpkgs.nixosModules.readOnlyPkgs		
+					({ config, ... }: { nixpkgs.pkgs = withSystem config.nixpkgs.hostPlatform.system ({ pkgs, ... }: pkgs); })
+
 					({ pkgs, ... }: {
-						nixpkgs.pkgs = pkgs;
 						nix.settings.experimentalFeatures = [ "nix-command" "flakes" ];
 
 						networking.hostName = hostName;
@@ -38,8 +39,6 @@
 					})
 
 					./hosts/${fqdnPrefix}
-					inputs.nixpkgs.nixosModules.readOnlyPkgs		
-					({ config, ... }: { nixpkgs.pkgs = withSystem config.nixpkgs.hostPlatform.system ({ pkgs, ... }: pkgs); })
 				];
 			};
 		in {

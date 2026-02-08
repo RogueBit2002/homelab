@@ -16,8 +16,10 @@
 			imports = [
 
 				./nixos
+				./infra
 				./tools
 				./config
+
 
 				({ ... }: { 
 					perSystem = { system, ... }: {

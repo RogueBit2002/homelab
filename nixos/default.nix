@@ -43,9 +43,6 @@
 
 					./hosts/${fqdnPrefix}
 
-
-# inputs.nixpkgs.nixosModules.readOnlyPkgs	({ config, ... }: { nixpkgs.pkgs = withSystem config.nixpkgs.hostPlatform.system ({ pkgs, ... }: pkgs); })
-
 				];
 			};
 		in {

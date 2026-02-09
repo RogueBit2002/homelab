@@ -1,5 +1,5 @@
 { inputs, ... }: let
-	trivial = inputs.nixpkgs.trivial;
+	trivial = inputs.nixpkgs.lib.trivial;
 in {
 	flake.homelab.domain = "crowsnest.homelab";
 	flake.homelab.networks = let

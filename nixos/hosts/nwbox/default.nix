@@ -27,7 +27,7 @@ in {
 
 		firewall.enable = false;
 
-
+		nanmeservers = [ "1.1.1.1" "1.0.0.1" ];
 		vlans.backbone = { interface = "enp1s0f1"; id = flake.homelab.networks.backbone.vlan; };
 
 

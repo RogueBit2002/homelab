@@ -33,6 +33,7 @@ in {
 
 		interfaces.enp1s0f0.useDHCP = false;
 		interfaces.enp1s0f1.useDHCP = false;
+		interfaces.backbone.useDHCP = false;
 
 		interfaces.enp1s0f0.ipv6.addresses = [{ address = flake.homelab.networks.management.static "2"; prefixLength = 64; }];
 		interfaces.backbone.ipv6.addresses = [{ address = flake.homelab.networks.backbone.static "2"; prefixLength = 64; }];	

@@ -33,13 +33,16 @@ in {
 
 		interfaces.enp1s0f0.useDHCP = false;
 		interfaces.enp1s0f1.useDHCP = false;
+		interfaces.enp1s0f2.useDHCP = false;
+		interfaces.enp1s0f3.useDHCP = false;
 		interfaces.backbone.useDHCP = false;
 
+		interfaces.enp1s0f0.ipv4.addresses = [{ address = "172.16.16.2"; prefixLength = 24; }];
 		interfaces.enp1s0f0.ipv6.addresses = [{ address = flake.homelab.networks.management.static "2"; prefixLength = 64; }];
 		interfaces.backbone.ipv6.addresses = [{ address = flake.homelab.networks.backbone.static "2"; prefixLength = 64; }];	
 		#bridges.backbone-bridge.interfaces = [ "backkbone" ];
 
-			
+		defaultGateway = "172.16.16.1";
 	};
 
 	services.bind = {

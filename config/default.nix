@@ -12,10 +12,10 @@ in {
 					# v4 = "172.16";
 					prefix = "${root}:${hexId}::/64";
 
-					static = segment: "${root}:${hexId}:${segment}";
+					static = segment: "${root}:${hexId}::${segment}";
 				};
 			in {
-				backbone = mkNetwork "B";
+				backbone = mkNetwork "b";
 				management = mkNetwork "10";
 			};
 }

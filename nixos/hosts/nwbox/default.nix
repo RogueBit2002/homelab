@@ -34,7 +34,7 @@ in {
 		interfaces.enp1s0f0.useDHCP = false;
 		interfaces.enp1s0f1.useDHCP = false;
 
-		interfaces.enp1s0f0.ipv6.addresses = [{ address = flake.homelab.networks.management.static "2"; prefix = 64; }];
+		interfaces.enp1s0f0.ipv6.addresses = [{ address = flake.homelab.networks.management.static "2"; prefixLength = 64; }];
 		interfaces.backbone.ipv6.addresses = [{ address = flake.homelab.networks.backbone.static "2"; prefixLength = 64; }];	
 		#bridges.backbone-bridge.interfaces = [ "backkbone" ];
 
@@ -43,7 +43,7 @@ in {
 
 	services.bind = {
 		enable = true;
-		listenOnIpv6 = let addr = builtins.elemAt config.networking.interfaces.backbone.ipv6.addresses 0; in "${addr.address}/${addr.prefix}";
+		listenOnIpv6 = let addr = builtins.elemAt config.networking.interfaces.backbone.ipv6.addresses 0; in "${addr.address}/${addr.prefixLength}";
 		
 	};
 

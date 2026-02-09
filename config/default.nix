@@ -1,6 +1,4 @@
 { inputs, ... }: let
-	hex = str: (builtins.fromTOML "hex = ${hex}").hex;
-
 	trivial = inputs.nixpkgs.trivial;
 in {
 	flake.homelab.domain = "crowsnest.homelab";
@@ -14,7 +12,7 @@ in {
 					# v4 = "172.16";
 					prefix = "${root}:${hex}::/64";
 
-					static = segment: "${root}:${hex}:${segment}";
+					static = segment: "${root}:${hexId}:${segment}";
 				};
 			in {
 				backbone = mkNetwork "B";

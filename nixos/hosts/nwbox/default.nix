@@ -11,10 +11,12 @@ in {
 		enable = true;
 
 		settings = {
+			
 			PermitRootLogin = "no";
 		};
 	};
-
+	
+	environment.etc."comin-proof".text = "A";
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
 
@@ -33,12 +35,16 @@ in {
 		interfaces.enp1s0f1.useDHCP = false;
 
 		interfaces.enp1s0f0.ipv6.addresses = [{ address = flake.homelab.networks.management.static "2"; prefix = 64; }];
-		interfaces.backbone.ipv4.addresses = [{ address = flake.homelab.networks.backbone.static "2"; prefixLength = 64; }];	
+		interfaces.backbone.ipv6.addresses = [{ address = flake.homelab.networks.backbone.static "2"; prefixLength = 64; }];	
 		#bridges.backbone-bridge.interfaces = [ "backkbone" ];
 
 			
 	};
 
-	
+	services.bind = {
+		enable = true;
+		listenOnIpv6 = let addr = builtins.elemAt config.networking.interfaces.backbone.ipv6.addresses 0; in "${addr.address}/${addr.prefix}";
+		
+	};
 
 }

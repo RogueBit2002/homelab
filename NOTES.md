@@ -63,7 +63,10 @@ Things that need static address:
 | WAX220 | wifi.infra |
 | nwbox | nwbox.infra |
 | hybrid | hybrid.infra |
+| storage | storage |
 
 
-lx-workstation
-lx-laptop
+Who is responsible for defining static addresses?
+
+- Hosts (NixOS, RouterOS)
+- Flake

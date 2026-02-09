@@ -1,18 +1,15 @@
-{ config, lib, pkgs, flake, ... }:
-
-{
+{ config, lib, pkgs, flake, ... }: let
+	
+in {
 	imports = [
 		./hardware-configuration.nix
-
-		../../modules/users.nix
-		../../modules/i18n.nix
-		../../modules/common-packages.nix		
 	];
+
+	# homelab.dns."${config.networking.fqdn}" = "aaaaaaaa";
 	
 	services.openssh = {
 		enable = true;
 
-		#listenAddresses = [ { addr = "172.16.0.2"; } ];
 		settings = {
 			PermitRootLogin = "no";
 		};
@@ -21,30 +18,27 @@
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
 
-	#programs.ssh.startAgent = true;
+	programs.ssh.startAgent = true;
 
-	/*programs.ssh.knownHosts = {
-		github = {
-			hostNames = [ "github.com" ];
-			publicKeyFile = /root/.ssh/id_25519-homelab-repo.pub;
-		};
-	};*/
 	networking = {
 		networkmanager.enable = true;
 
-		interfaces.enp2s0.useDHCP = true;
-		interfaces.enp1s0f0.useDHCP = true;
-		#interfaces."enp1s0f0" = { useDHCP = false; ipv4.addresses = [ { address = "172.16.16.2"; prefixLength = 24; } ]; };
-		
-		#defaultGateway.address = "172.16.16.2";
-		nameservers = [ "1.1.1.1" "1.0.0.1" ];
-
 		firewall.enable = false;
-		#firewall.allowedUDPPorts = [ 22 ];
-		#firewall.allowedTCPPorts = [ 22 ];
+
+
+		vlans.backbone = { interface = "enp1s0f1"; id = flake.homelab.networks.backbone.vlan; };
+
+
+		interfaces.enp1s0f0.useDHCP = false;
+		interfaces.enp1s0f1.useDHCP = false;
+
+		interfaces.enp1s0f0.ipv6.addresses = [{ address = flake.homelab.networks.management.static "2"; prefix = 64; }];
+		interfaces.backbone.ipv4.addresses = [{ address = flake.homelab.networks.backbone.static "2"; prefixLength = 64; }];	
+		#bridges.backbone-bridge.interfaces = [ "backkbone" ];
+
+			
 	};
 
+	
 
-  	
-	#networking.interfaces.enp2s0.useDHCP = true;
 }

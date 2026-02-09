@@ -7,7 +7,7 @@
 				fqdnPrefixParts = builtins.match "([^.]*)\\.(.*)" fqdnPrefix;
 
 				hostName = if fqdnPrefixParts != null then builtins.elemAt fqdnPrefixParts 0 else fqdnPrefix;
-				domain = (if fqdnPrefixParts != null then "${builtins.elemAt fqdnPrefixParts 1}." else "") + self.homelab-config.networking.domain;
+				domain = "${(if fqdnPrefixParts != null then "${builtins.elemAt fqdnPrefixParts 1}." else "")}${self.homelab-config.networking.domain}";
 
 			in inputs.nixpkgs.lib.nixosSystem {
 
@@ -17,37 +17,25 @@
 				specialArgs = { flake = self; };
 
 				modules = [
-					inputs.comin.nixosModules.comin
-							
-				
 					({ pkgs, ... }: {
 						nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
 						networking.hostName = hostName;
 						networking.domain = domain;
 						
-						services.comin = {
-              				enable = true;
-							remotes = [{
-								name = "origin";
-								url = "s;sh+git://git@github.com/RogueBit2002/homelab.git";
-								branches.main.name = "main";
-							}];
-            			};
-
-						systemd.services.comin.environment.GIT_SSH_COMMAND = "${pkgs.openssh}/bin/ssh -i /etc/ssh/homelab/ed25519_repo";
-
-
+						
 						system.stateVersion = "25.11";
 					})
+					
+					inputs.comin.nixosModules.comin
 
-					./hosts/${fqdnPrefix}
-
+					./common	
+					./hosts/${hostName}
 				];
 			};
-		in {
-			"nwbox" = mkSystem "nwbox" "x86_64-linux";
-		};
+		in builtins.foldl' (acc: system: acc // { ${system.config.networking.hostName} = system; }) {} [
+			(mkSystem "nwbox.infra" "x86_64-linux")
+		];
 	};
 
 }

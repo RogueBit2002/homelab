@@ -3,7 +3,7 @@
               				enable = true;
 							remotes = [{
 								name = "origin";
-								url = "git+ssh://git@github.com/RogueBit2002/homelab.git";
+								url = "git@github.com:RogueBit2002/homelab.git";
 								branches.main.name = "main";
 							}];
             			};

@@ -7,7 +7,7 @@
 				fqdnPrefixParts = builtins.match "([^.]*)\\.(.*)" fqdnPrefix;
 
 				hostName = if fqdnPrefixParts != null then builtins.elemAt fqdnPrefixParts 0 else fqdnPrefix;
-				domain = "${(if fqdnPrefixParts != null then "${builtins.elemAt fqdnPrefixParts 1}." else "")}${self.homelab-config.networking.domain}";
+				domain = "${(if fqdnPrefixParts != null then "${builtins.elemAt fqdnPrefixParts 1}." else "")}${self.homelab.domain}";
 
 			in inputs.nixpkgs.lib.nixosSystem {
 

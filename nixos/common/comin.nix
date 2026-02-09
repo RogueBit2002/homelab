@@ -1,6 +1,6 @@
 { pkgs, ... }: {
 	services.comin = {
-              				enable = true;
+              				enable = false;
 							remotes = [{
 								name = "origin";
 								url = "git@github.com:RogueBit2002/homelab.git";

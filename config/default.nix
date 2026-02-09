@@ -10,7 +10,7 @@ in {
 					vlan = trivial.fromHexString hexId;
 					
 					# v4 = "172.16";
-					prefix = "${root}:${hex}::/64";
+					prefix = "${root}:${hexId}::/64";
 
 					static = segment: "${root}:${hexId}:${segment}";
 				};

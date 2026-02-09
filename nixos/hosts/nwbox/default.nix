@@ -46,7 +46,7 @@ in {
 	};
 
 	services.bind = {
-		enable = true;
+		enable = false;
 		listenOnIpv6 = let addr = builtins.elemAt config.networking.interfaces.backbone.ipv6.addresses 0; in [ "${addr.address}/${builtins.toString addr.prefixLength}" ];
 		
 	};

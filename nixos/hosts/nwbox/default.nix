@@ -1,4 +1,4 @@
-{ config, lib, pkgs, flake, ... }: let
+{ config, lib, pkgs, flake, homelab, ... }: let
 	
 in {
 	imports = [
@@ -28,7 +28,7 @@ in {
 		firewall.enable = false;
 
 		nameservers = [ "1.1.1.1" "1.0.0.1" ];
-		vlans.backbone = { interface = "enp1s0f1"; id = flake.homelab.networks.backbone.vlan; };
+		vlans.backbone = { interface = "enp1s0f1"; id = homelab.networking.networks.backbone.vlan; };
 
 
 		interfaces.enp1s0f0.useDHCP = false;
@@ -38,8 +38,8 @@ in {
 		interfaces.backbone.useDHCP = false;
 
 		interfaces.enp1s0f0.ipv4.addresses = [{ address = "172.16.16.2"; prefixLength = 24; }];
-		interfaces.enp1s0f0.ipv6.addresses = [{ address = flake.homelab.networks.management.static "2"; prefixLength = 64; }];
-		interfaces.backbone.ipv6.addresses = [{ address = flake.homelab.networks.backbone.static "2"; prefixLength = 64; }];	
+		interfaces.enp1s0f0.ipv6.addresses = [{ address = homelab.networking.networks.management.static "2"; prefixLength = 64; }];
+		interfaces.backbone.ipv6.addresses = [{ address = homelab.networking.networks.backbone.static "2"; prefixLength = 64; }];	
 
 		defaultGateway = "172.16.16.1";
 	};

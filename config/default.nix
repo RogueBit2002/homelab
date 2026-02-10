@@ -1,21 +1,24 @@
 { inputs, ... }: let
 	trivial = inputs.nixpkgs.lib.trivial;
 in {
-	flake.homelab.domain = "crowsnest.homelab";
-	flake.homelab.networks = let
+	flake.networking = let
 
-				root = "fd42:e2cd:499f";
+			root = "fd42:e2cd:499f";
 
-				mkNetwork = hexId: {
-					vlan = trivial.fromHexString hexId;
+			mkNetwork = hexId: {
+				vlan = trivial.fromHexString hexId;
 					
-					# v4 = "172.16";
-					prefix = "${root}:${hexId}::/64";
+				# v4 = "172.16";
+				prefix = "${root}:${hexId}::/64";
+				static = segment: "${root}:${hexId}::${segment}";
+			};
+		in {
+			domain = "crowsnest.homelab";
+			ulaPrefix = "fd42:e2cd:499f";
 
-					static = segment: "${root}:${hexId}::${segment}";
-				};
-			in {
+			networks = {
 				backbone = mkNetwork "b";
 				management = mkNetwork "10";
 			};
+		};
 }

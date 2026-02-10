@@ -7,14 +7,19 @@
 				fqdnPrefixParts = builtins.match "([^.]*)\\.(.*)" fqdnPrefix;
 
 				hostName = if fqdnPrefixParts != null then builtins.elemAt fqdnPrefixParts 0 else fqdnPrefix;
-				domain = "${(if fqdnPrefixParts != null then "${builtins.elemAt fqdnPrefixParts 1}." else "")}${self.homelab.domain}";
+				domain = "${(if fqdnPrefixParts != null then "${builtins.elemAt fqdnPrefixParts 1}." else "")}${self.networking.domain}";
 
 			in inputs.nixpkgs.lib.nixosSystem {
 
 				pkgs = withSystem system ({ pkgs, ... }: pkgs);
 				inherit system;
 
-				specialArgs = { flake = self; };
+				specialArgs = { 
+					flake = self;
+					homelab = {
+						networking = self.networking;
+					};
+				};
 
 				modules = [
 					({ pkgs, ... }: {

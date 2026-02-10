@@ -70,3 +70,16 @@ Who is responsible for defining static addresses?
 
 - Hosts (NixOS, RouterOS)
 - Flake
+
+
+
+----
+Hold, I need to look at the bigger picture.
+
+IPv4 is purely handled by RouterOS and DHCP. It's there for backup and legacy.
+
+IPv6 should only be handled by NixOS when a static address is required.
+
+*I don't need to stress about IPv4 address arithmatic, because that can be handled by IaC*
+
+Instead of defining one big "networking" config with functionality I should pass everything in with lib or a custom extra argument

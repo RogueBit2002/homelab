@@ -23,7 +23,7 @@ in {
 	programs.ssh.startAgent = true;
 
 	networking = {
-		networkmanager.enable = true;
+		# networkmanager.enable = true;
 
 		firewall.enable = false;
 

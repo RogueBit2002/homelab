@@ -30,7 +30,7 @@ in {
 		nameservers = [ "1.1.1.1" "1.0.0.1" ];
 		vlans.backbone = { interface = "enp1s0f1"; id = homelab.networking.networks.backbone.vlan; };
 
-
+		useDHCP = false;
 		interfaces.enp1s0f0.useDHCP = false;
 		interfaces.enp1s0f1.useDHCP = false;
 		interfaces.enp1s0f2.useDHCP = false;

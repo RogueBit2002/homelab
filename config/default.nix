@@ -1,9 +1,9 @@
 { inputs, ... }: let
 	trivial = inputs.nixpkgs.lib.trivial;
 in {
-	flake.homelab.networking = let
+	flake.networking = let
 
-			root = "fd42:e2cd:499f";
+			root = "fd42:e2cd:449f";
 
 			mkNetwork = hexId: {
 				vlan = trivial.fromHexString hexId;
@@ -14,7 +14,7 @@ in {
 			};
 		in {
 			domain = "crowsnest.homelab";
-			ulaPrefix = "fd42:e2cd:449f";
+			ulaPrefix = root;
 
 			networks = {
 				backbone = mkNetwork "b";

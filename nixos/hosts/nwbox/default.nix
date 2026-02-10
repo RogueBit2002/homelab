@@ -16,7 +16,6 @@ in {
 		};
 	};
 	
-	environment.etc."comin-proof".text = "A";
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
 
@@ -41,6 +40,10 @@ in {
 		interfaces.backbone.ipv6.addresses = [{ address = homelab.networking.networks.backbone.static "2"; prefixLength = 64; }];	
 
 		defaultGateway = "172.16.16.1";
+		defaultGateway6 = {
+			address = homelab.networking.networks.management.static "1";
+			interface = "enp1s0f0";
+		};
 	};
 
 	services.bind = {

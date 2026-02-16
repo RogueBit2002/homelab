@@ -55,7 +55,7 @@ in {
 					"::1"
 					backboneAddress
 				];
-
+				control-enable = true;
 				# control-enable = "yes";
 				do-not-query-localhost = false;
 

@@ -67,7 +67,8 @@
 					"${homelab.networking.ulaPrefix}::0/48 allow"
 				];
 
-				
+				local-zone = [ "\"${homelab.networking.domain}.\" transparent" ];
+				local-data = builtins.foldl' (acc: name: acc ++ [ "\"${name}. AAAA ${homelab.dns.${name}}\"" ]) [] (builtins.attrNames homelab.dns);
 			};
 		};
 	};

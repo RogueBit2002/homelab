@@ -18,6 +18,7 @@
 					flake = self;
 					homelab = {
 						networking = self.networking;
+						dns = self.dns;
 					};
 				};
 

@@ -10,7 +10,7 @@ in {
 	services.openssh = {
 		enable = true;
 
-		listenAddresses = [ managementAddress ];
+		listenAddresses = [ { addr = managementAddress; } ];
 		settings = {
 			PermitRootLogin = "no";
 		};

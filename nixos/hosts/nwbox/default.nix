@@ -50,13 +50,16 @@ in {
 		enable = true;
 
 		settings = {
+			remote-control = {
+				control-enable = true;
+			};
+
 			server = {
 				interface = [ 
 					"::1"
 					backboneAddress
 				];
-				control-enable = true;
-				# control-enable = "yes";
+
 				do-not-query-localhost = false;
 
 				access-control = [

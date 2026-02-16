@@ -1,4 +1,8 @@
-{ config, homelab, ... }: {
+{ config, homelab, ... }: let
+
+	managementAddress = homelab.networking.networks.management.static "2";
+	backboneAddress = homelab.networking.networks.backbone.static "2";
+in {
 	imports = [
 		./hardware-configuration.nix
 	];
@@ -6,8 +10,8 @@
 	services.openssh = {
 		enable = true;
 
+		listenAddresses = [ managementAddress ];
 		settings = {
-			
 			PermitRootLogin = "no";
 		};
 	};
@@ -32,8 +36,8 @@
 
 		interfaces.backbone.tempAddress = "disabled";
 		interfaces.enp1s0f0.ipv4.addresses = [{ address = "172.16.16.2"; prefixLength = 24; }];
-		interfaces.enp1s0f0.ipv6.addresses = [{ address = homelab.networking.networks.management.static "2"; prefixLength = 64; }];
-		interfaces.backbone.ipv6.addresses = [{ address = homelab.networking.networks.backbone.static "2"; prefixLength = 64; }];	
+		interfaces.enp1s0f0.ipv6.addresses = [{ address = managementAddress; prefixLength = 64; }];
+		interfaces.backbone.ipv6.addresses = [{ address = backboneAddress; prefixLength = 64; }];	
 
 		defaultGateway = "172.16.16.1";
 		defaultGateway6 = {
@@ -49,10 +53,10 @@
 			server = {
 				interface = [ 
 					"::1"
-					(builtins.elemAt config.networking.interfaces.backbone.ipv6.addresses 0).address
+					backboneAddress
 				];
 
-				control-enable = "yes";
+				# control-enable = "yes";
 				do-not-query-localhost = false;
 
 				access-control = [

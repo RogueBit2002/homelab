@@ -1,6 +1,4 @@
-{ config, lib, pkgs, flake, homelab, ... }: let
-	
-in {
+{ config, lib, pkgs, flake, homelab, ... }: {
 	imports = [
 		./hardware-configuration.nix
 	];
@@ -46,10 +44,87 @@ in {
 		};
 	};
 
-	services.bind = {
+	/*services.bind = {
 		enable = false;
 		listenOnIpv6 = let addr = builtins.elemAt config.networking.interfaces.backbone.ipv6.addresses 0; in [ "${addr.address}/${builtins.toString addr.prefixLength}" ];
 		
+	};*/
+
+	services.unbound = {
+		enable = true;
+
+		settings = {
+			server = {
+				interface = [ 
+					"::1"
+					(builtins.elemAt config.networking.interfaces.backbone.ipv6.addresses 0).address
+				];
+
+				do-not-query-localhost = false;
+
+				access-control = [
+					"::1 allow"
+					"${homelab.networking.ulaPrefix}::0/48 allow"
+				];
+
+				
+			};
+		};
 	};
+
+/*
+			services.unbound = {
+				enable = true;
+
+				settings = {
+					server = {
+						interface = [ "10.0.99.2" ];
+						#port = 8000;
+
+
+
+						#local-data = builtins.map 
+						#	(entry: "\"${entry.name}. A ${entry.address}\"") records;
+
+						do-not-query-localhost = false;
+						
+
+						access-control = [
+							"127.0.0.1 allow_snoop"
+							"10.0.0.0/16 allow_snoop"
+						];
+
+						access-control-view = builtins.map 
+							(view: "${view.subnet} " + builtins.hashString "sha1" view.subnet) views;
+
+
+						#view = [ "name: \"xxxx\"" ];
+						view = builtins.map (view:
+							"name: \"${builtins.hashString "sha1" view.subnet}\"\n" +
+							(builtins.foldl' (acc: record: 
+								acc + "local-data: \"${record.name}. A ${record.address}\"\n"
+							) "" view.records)
+						) views;
+						#view =builtins.map (view: "name: \"\"") C;
+					};
+
+					forward-zone = [
+						{
+							name = ".";
+							forward-tls-upstream = false; #Normally this would be true, but adguard is local, so doesn't need encryption
+							forward-addr = [ "10.0.99.3@53" ];
+							/*forward-addr = [
+								"1.1.1.1@853#cloudflare-dns.com"
+								"1.0.0.1@853#cloudflare-dns.com"
+							];*/
+
+					#	}
+				#	];
+			#	};
+
+			#};*/
+
+
+	
 
 }

@@ -13,7 +13,7 @@ in {
 				static = segment: "${root}:${hexId}::${segment}";
 			};
 		in {
-			domain = "crowsnest.homelab";
+			domain = "crowsnest.sh";
 			ulaPrefix = root;
 
 			networks = {

@@ -19,7 +19,7 @@
 				./infra
 				./tools
 				./config
-
+				./dns.nix
 
 				({ ... }: { 
 					perSystem = { system, ... }: {

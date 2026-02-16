@@ -9,6 +9,12 @@
 		};
 	};
 
+
+	flake.infra = {
+		devices = {
+		};
+	};
+
 	# flake.homelab.infra = {
 			
 	# };

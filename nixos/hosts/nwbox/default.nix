@@ -52,7 +52,7 @@
 					(builtins.elemAt config.networking.interfaces.backbone.ipv6.addresses 0).address
 				];
 
-				control-enable = true;
+				control-enable = "yes";
 				do-not-query-localhost = false;
 
 				access-control = [

@@ -37,6 +37,7 @@
 					enable = true;
 					directories = [
 						"/etc/nixos"
+						"/var/lib/comin" # Not sure about this one
 					];
 
 					files = [

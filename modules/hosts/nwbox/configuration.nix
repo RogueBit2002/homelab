@@ -57,6 +57,7 @@
 				networking.interfaces.enp1s0f2.useDHCP = false;
 				networking.interfaces.enp1s0f3.useDHCP = false;
 
+				powerManagement.cpuFreqGovernor = "powersave";
 			})
 		];
 	};

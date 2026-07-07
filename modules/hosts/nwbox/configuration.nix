@@ -10,6 +10,7 @@
 			self.nixosModules.nix
 			self.nixosModules.users
 			self.nixosModules.i18n
+			self.nixosModules.compat
 
 			({ pkgs, lib, ... }: {
 				system.stateVersion = "26.05";

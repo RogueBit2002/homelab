@@ -5,6 +5,7 @@
 			self.nixosModules.nwbox-hardware
 
 			inputs.impermanence.nixosModules.impermanence
+			inputs.comin.nixosModules.comin
 
 			self.nixosModules.nix
 			self.nixosModules.users
@@ -40,6 +41,15 @@
 					files = [
 						"/etc/machine-id"
 					];
+				};
+
+				services.comin = {
+					enable = true;
+					hostname = "nwbox";
+					remotes = [{
+						name = "origin";
+						url = "https://github.com/RogueBit2002/homelab";
+					}];
 				};
 			})
 		];

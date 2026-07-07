@@ -5,6 +5,9 @@
 
 		nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
+		comin.url = "github:nlewo/comin";
+		comin.inputs.nixpkgs.follows = "nixpkgs";
+
 		impermanence.url = "github:nix-community/impermanence";
 		impermanence.inputs.home-manager.follows = "";
 	};

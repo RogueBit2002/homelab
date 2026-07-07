@@ -1,3 +1,0 @@
-provider "routeros" {
-	hosturl = "https://
-}

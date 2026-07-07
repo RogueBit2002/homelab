@@ -1,33 +1,31 @@
 {
-	description = "Homelab Flake";
-
 	inputs = {
-		nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 		flake-parts.url = "github:hercules-ci/flake-parts";
+		import-tree.url = "github:vic/import-tree";
 
-		comin = {
-			url = "github:nlewo/comin?tag=v0.10.0";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
+		nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+
+		impermanence.url = "github:nix-community/impermanence";
+		impermanence.inputs.home-manager.follows = "";
 	};
 
-	outputs = { ... }@inputs:
-		inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+	outputs = { ... }@inputs: inputs.flake-parts.lib.mkFlake
+		{ inherit inputs; }
+		{
+			systems = [ "x86_64-linux" ];
+			
 			imports = [
-
-				./nixos
-				./infra
-				./tools
-				./config
-				./dns.nix
-
-				({ ... }: { 
+				({ inputs, ... }: {
 					perSystem = { system, ... }: {
-						_module.args.pkgs = import inputs.nixpkgs { inherit system; config.allowUnfree = true; };
+						_module.args.pkgs = import inputs.nixpkgs {
+							inherit system;
+							config.allowUnfree = true;
+						};
 					};
 				})
+
+				(inputs.import-tree ./modules)
 			];
 			
-			systems = [ "x86_64-linux" ];
 		};
 }

@@ -51,6 +51,12 @@
 						url = "https://github.com/RogueBit2002/homelab";
 					}];
 				};
+
+				networking.interfaces.enp1s0f0.useDHCP = false;
+				networking.interfaces.enp1s0f1.useDHCP = false;
+				networking.interfaces.enp1s0f2.useDHCP = false;
+				networking.interfaces.enp1s0f3.useDHCP = false;
+
 			})
 		];
 	};

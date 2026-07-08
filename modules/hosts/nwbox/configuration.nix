@@ -98,7 +98,7 @@
 							"fd42:e2cd:449f:b::2"
 						];
 
-						do-not-query-localhost = false;
+						do-not-query-localhost = "no";
 
 						access-control = [
 							"::1 allow"

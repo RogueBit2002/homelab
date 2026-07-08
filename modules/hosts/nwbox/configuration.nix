@@ -1,6 +1,7 @@
 { self, inputs, ... }: {
 
 	flake.dns."foo.crowsnest.sh".v4 = "123.123.123.123";
+	flake.dns."foo.crowsnest.sh".v6 = "::10";
 
 	flake.nixosConfigurations.nwbox = inputs.nixpkgs.lib.nixosSystem {
 		

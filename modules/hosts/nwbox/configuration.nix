@@ -1,4 +1,7 @@
 { self, inputs, ... }: {
+
+	flake.dns."foo.crowsnest.sh".v4 = "123.123.123.123";
+
 	flake.nixosConfigurations.nwbox = inputs.nixpkgs.lib.nixosSystem {
 		
 		modules = [
@@ -76,6 +79,7 @@
 					interfaces.backbone.ipv6.addresses = [{ address = "fd42:e2cd:449f:b::2"; prefixLength = 64; }];
 
 					defaultGateway = "172.16.16.1";
+
 					defaultGateway6 = {
 						address = "fd42:e2cd:449f:10::1";
 						interface = "enp1s0f0";
@@ -83,6 +87,28 @@
 				};
 
 				powerManagement.cpuFreqGovernor = "powersave";
+
+
+				services.unbound = {
+					enable = true;
+
+					settings = {
+						interface = [
+							"::1"
+							"fd42:e2cd:449f:b::2"
+						];
+
+						do-not-query-localhost = false;
+
+						access-control = [
+							"::1 allow"
+							"fd42:e2cd:449f::0/48 allow"
+						];
+
+						local-zone = [ "\"crowsnest.sh.\" transparent" ];
+						# local-data = [ ]; # Should use some registry to record all this
+					};
+				};
 			})
 		];
 	};

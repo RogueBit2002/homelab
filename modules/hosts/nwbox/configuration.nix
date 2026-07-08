@@ -73,7 +73,7 @@
 					interfaces.backbone.tempAddress = "disabled";
 					interfaces.enp1s0f0.ipv4.addresses = [{ address = "172.16.16.2"; prefixLength = 24; }];
 					interfaces.enp1s0f0.ipv6.addresses = [{ address = "fd42:e2cd:449f:10::2"; prefixLength = 64; }];
-					interfaces.enp1s0f1.ipv6.addresses = [{ address = "fd42:e2cd:449f:b::2"; prefixLength = 64; }];
+					interfaces.backbone.ipv6.addresses = [{ address = "fd42:e2cd:449f:b::2"; prefixLength = 64; }];
 
 					defaultGateway = "172.16.16.1";
 					defaultGateway6 = {

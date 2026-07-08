@@ -43,6 +43,10 @@
 						"/etc/machine-id"
 					];
 				};
+				
+				security.sudo.extraConfig = ''
+					Defaults lecture = never
+				'';
 
 				services.comin = {
 					enable = true;

@@ -106,7 +106,12 @@
 						];
 
 						local-zone = [ "\"crowsnest.sh.\" transparent" ];
-						# local-data = [ ]; # Should use some registry to record all this
+						local-data = builtins.foldl' (entries: record: 
+							entries 
+							++ (lib.optionals (self.dns.${record}.v4 != null) [ "\"${record}. A ${self.dns.${record}.v4}\"" ]) 
+							++ (lib.optionals (self.dns.${record}.v6 != null) [ "\"${record}. AAAA ${self.dns.${record}.v6}\"" ]) 
+						) [] (builtins.attrNames self.dns);
+
 					};
 				};
 			})

@@ -17,11 +17,10 @@
 
 				boot.loader.systemd-boot.enable = true;
 				boot.loader.efi.canTouchEfiVariables = true;
+				boot.kernelPackages = pkgs.linuxPackages_7_0;
 
 				networking.hostName = "nwbox";
 				networking.domain = "crowsnest.sh";
-
-				networking.networkmanager.enable = true;
 
 				environment.systemPackages = with pkgs; [
 					git
@@ -53,11 +52,31 @@
 						url = "https://github.com/RogueBit2002/homelab";
 					}];
 				};
+				
+				networking = {
+					firewall.enable = false; # Should probably turn this on at some point
 
-				networking.interfaces.enp1s0f0.useDHCP = false;
-				networking.interfaces.enp1s0f1.useDHCP = false;
-				networking.interfaces.enp1s0f2.useDHCP = false;
-				networking.interfaces.enp1s0f3.useDHCP = false;
+					nameservers = [ "1.1.1.1" "1.0.0.1" ];
+					vlans.backbone = { interface = "enp1s0f1"; id = 11; }; # b
+
+					useDHCP = false;
+					interfaces.enp1s0f0.useDHCP = false;
+					interfaces.enp1s0f1.useDHCP = false;
+					interfaces.enp1s0f2.useDHCP = false;
+					interfaces.enp1s0f3.useDHCP = false;
+					interfaces.backbone.useDHCP = false;
+
+					interfaces.backbone.tempAddress = "disabled";
+					interfaces.enp1s0f0.ipv4.addresses = [{ address = "172.16.16.2"; prefixLength = 24; }];
+					interfaces.enp1s0f0.ipv6.addresses = [{ address = "fd42:e2cd:449f:10::2"; prefixLength = 64; }];
+					interfaces.enp1s0f1.ipv6.addresses = [{ address = "fd42:e2cd:449f:b::2"; prefixLength = 64; }];
+
+					defaultGateway = "172.16.16.1";
+					defaultGateway6 = {
+						address = "fd42:e2cd:449f:10::1";
+						interface = "enp1s0f0";
+					};
+				};
 
 				powerManagement.cpuFreqGovernor = "powersave";
 			})
